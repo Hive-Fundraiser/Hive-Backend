@@ -1,2 +1,2 @@
-# Hive-Backend
- Backend of Hive project 
+# Hive-Project
+ Project for testing software lesson 
