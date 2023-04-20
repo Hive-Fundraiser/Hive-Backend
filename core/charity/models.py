@@ -5,7 +5,7 @@ class Advertisement(models.Model):
     '''
     this is a class for define advertisement for charity app
     '''
-    raiser = models.ForeignKey(User, on_delete = models.CASCADE)
+    raiser = models.ForeignKey('accounts.Profile', on_delete = models.CASCADE)
     image = models.ImageField(upload_to ='ads/'  , default = 'blog/default.jpg')
     title = models.CharField(max_length=255)
     content = models.TextField()
