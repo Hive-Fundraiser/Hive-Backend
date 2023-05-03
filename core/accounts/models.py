@@ -64,7 +64,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     phone_number = PhoneNumberField(null=True,blank=True)
-    avatar = models.ImageField(upload_to = 'profile/avatar')
+    avatar = models.ImageField(upload_to = 'profile/avatar',null=True,blank=True)
     description = models.TextField()
 
     bank_account_number = models.CharField(max_length=16)
