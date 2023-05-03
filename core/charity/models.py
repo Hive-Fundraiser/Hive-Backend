@@ -7,7 +7,7 @@ class Advertisement(models.Model):
     this is a class for define advertisement for charity app
     '''
     raiser = models.ForeignKey('accounts.Profile', on_delete = models.CASCADE)
-    image = models.ImageField(upload_to ='ads/'  , default = 'blog/default.jpg')
+    image = models.ImageField(upload_to ='ads/'  , null=True , blank=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.BooleanField(default=True)
@@ -20,9 +20,6 @@ class Advertisement(models.Model):
     updated_date = models.DateTimeField(auto_now = True)
     published_date = models.DateTimeField(null=True)
 
-    def total_donated_amount(self):
-        return self.collected_amount.aggregate(Sum('amount'))['collected_amount']
-    
     def __str__(self):
         return self.title
 
