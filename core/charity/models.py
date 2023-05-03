@@ -27,3 +27,12 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Donation(models.Model):
+    donor = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE)
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    donated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('donor', 'advertisement')
