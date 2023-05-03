@@ -13,7 +13,7 @@ class Advertisement(models.Model):
     category = models.ForeignKey('Category', on_delete = models.SET_NULL,null = True)
 
     estimated_amount = models.FloatField()
-    collected_amount = models.FloatField(null=True , blank=True)
+    collected_amount = models.FloatField(default = 0)
     
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now = True)
@@ -31,7 +31,7 @@ class Category(models.Model):
 class Donation(models.Model):
     donor = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE)
     advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.FloatField()
     donated_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
