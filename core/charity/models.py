@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum 
 from accounts.models import User
 # Create your models here.
 class Advertisement(models.Model):
@@ -19,6 +20,9 @@ class Advertisement(models.Model):
     updated_date = models.DateTimeField(auto_now = True)
     published_date = models.DateTimeField(null=True)
 
+    def total_donated_amount(self):
+        return self.collected_amount.aggregate(Sum('amount'))['collected_amount']
+    
     def __str__(self):
         return self.title
 
@@ -36,6 +40,11 @@ class Donation(models.Model):
 
     class Meta:
         unique_together = ('donor', 'advertisement')
-
+    
+    def save(self, *args, **kwargs):
+        self.advertisement.collected_amount += self.amount
+        self.advertisement.save()
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return self.advertisement.title
