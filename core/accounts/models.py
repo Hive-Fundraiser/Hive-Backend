@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 
@@ -62,7 +63,8 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to = 'profile/avatar')
+    phone_number = PhoneNumberField(null=True,blank=True)
+    avatar = models.ImageField(upload_to = 'profile/avatar')
     description = models.TextField()
 
     bank_account_number = models.CharField(max_length=16)
