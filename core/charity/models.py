@@ -36,3 +36,6 @@ class Donation(models.Model):
 
     class Meta:
         unique_together = ('donor', 'advertisement')
+
+    def __str__(self):
+        return self.advertisement.title
