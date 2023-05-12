@@ -59,7 +59,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'HIVE Project API',
-    'DESCRIPTION': 'This is Hive project',
+    'DESCRIPTION': 'اعضا: محمدحسین اسناوندی - محمد دانایی نیا - پویا علوی - سپهر نوروزی',
     'VERSION': '1.0.0',
 }
 
