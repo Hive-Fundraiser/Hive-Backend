@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'charity',
     'rest_framework',
-    'drf_spectacular'
+    'drf_spectacular',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
