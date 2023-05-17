@@ -4,9 +4,9 @@ from .serializers import AdsSerializer,CategorySerializer
 from charity.models import Advertisement,Category
 from rest_framework import mixins
 from rest_framework import viewsets
-
+from .permissions import IsOwnerOrReadOnly
 class AdsModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
     serializer_class = AdsSerializer
     queryset = Advertisement.objects.filter(status=True)
 
