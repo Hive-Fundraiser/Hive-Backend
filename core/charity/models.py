@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import Sum 
+from django.db.models import Sum
+from django.urls import reverse
 from accounts.models import User
 # Create your models here.
 class Advertisement(models.Model):
@@ -23,6 +24,12 @@ class Advertisement(models.Model):
     def __str__(self):
         return self.title
 
+    def get_snippet(self):
+        return self.content[0:50]
+
+    def get_absolute_api_url(self):
+        return reverse("charity:api-v1:ads-detail" , kwargs={"pk":self.pk})
+    
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -37,6 +44,9 @@ class Donation(models.Model):
 
     class Meta:
         unique_together = ('donor', 'advertisement')
+    
+
+
     
     def save(self, *args, **kwargs):
         self.advertisement.collected_amount += self.amount
