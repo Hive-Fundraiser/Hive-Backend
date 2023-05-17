@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from charity.models import Advertisement,Category
+from charity.models import Advertisement,Category,Donation
 from accounts.models import Profile
 class AdsSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source='get_snippet')
@@ -32,6 +32,13 @@ class AdsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['author'] = Profile.objects.get(user__id = self.context.get('request').user.id)
         return super().create(validated_data)
+
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        read_only_fields = ['donor']
+        model = Donation
+        fields = ['id', 'donor', 'advertisement', 'amount']
+
 
 
 class CategorySerializer(serializers.ModelSerializer):
