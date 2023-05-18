@@ -29,5 +29,7 @@ class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-
+    filter_backends = [DjangoFilterBackend,OrderingFilter]
+    ordering_fields = ['donated_at']
+    pagination_class = DefaultPagination
 

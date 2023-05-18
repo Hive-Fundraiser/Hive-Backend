@@ -42,8 +42,8 @@ class Donation(models.Model):
     amount = models.FloatField()
     donated_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('donor', 'advertisement')
+    # class Meta:
+    #     unique_together = ('donor', 'advertisement')
     
 
 
