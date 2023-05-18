@@ -8,11 +8,11 @@ class Advertisement(models.Model):
     this is a class for define advertisement for charity app
     '''
     raiser = models.ForeignKey('accounts.Profile', on_delete = models.CASCADE)
-    image = models.ImageField(upload_to ='ads/'  , null=True , blank=True)
+    image = models.ImageField(upload_to ='ads/', default = 'ads/default.jpg')
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.BooleanField(default=True)
-    category = models.ForeignKey('Category', on_delete = models.SET_NULL,null = True)
+    category = models.ForeignKey('Category', on_delete = models.SET_NULL , null=True)
 
     estimated_amount = models.FloatField()
     collected_amount = models.FloatField(default = 0)
@@ -25,7 +25,7 @@ class Advertisement(models.Model):
         return self.title
 
     def get_snippet(self):
-        return self.content[0:50]
+        return self.content[0:144]
 
     def get_absolute_api_url(self):
         return reverse("charity:api-v1:ads-detail" , kwargs={"pk":self.pk})
