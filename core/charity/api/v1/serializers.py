@@ -30,7 +30,7 @@ class AdsSerializer(serializers.ModelSerializer):
         return rep
     
     def create(self, validated_data):
-        validated_data['author'] = Profile.objects.get(user__id = self.context.get('request').user.id)
+        validated_data['raiser'] = Profile.objects.get(user__id = self.context.get('request').user.id)
         return super().create(validated_data)
 
 class DonationSerializer(serializers.ModelSerializer):
@@ -38,6 +38,10 @@ class DonationSerializer(serializers.ModelSerializer):
         read_only_fields = ['donor']
         model = Donation
         fields = ['id', 'donor', 'advertisement', 'amount']
+        
+    def create(self, validated_data):
+        validated_data['donor'] = Profile.objects.get(user__id = self.context.get('request').user.id)
+        return super().create(validated_data)
 
 
 
