@@ -65,6 +65,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=255)
     phone_number = PhoneNumberField(null=True,blank=True)
     avatar = models.ImageField(upload_to = 'profile/',default ='profile/default_avatar.jpg' )
+    bank_account_number = models.CharField(max_length=16 , null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

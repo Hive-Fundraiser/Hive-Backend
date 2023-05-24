@@ -10,7 +10,7 @@ class Advertisement(models.Model):
     raiser = models.ForeignKey('accounts.Profile', on_delete = models.CASCADE)
     image = models.ImageField(upload_to ='ads/', default = 'ads/default.jpg')
     title = models.CharField(max_length=255)
-    content = models.TextField(max_length = 2000)
+    content = models.TextField(max_length = 700)
     status = models.BooleanField(default=True)
     category = models.ForeignKey('Category', on_delete = models.SET_NULL , null=True)
 
