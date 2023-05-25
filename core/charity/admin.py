@@ -10,5 +10,5 @@ class DonationAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id' , 'name']
 admin.site.register(Advertisement,AdvertisementAdmin)
-admin.site.register(Category)
+admin.site.register(Category , CategoryAdmin)
 admin.site.register(Donation,DonationAdmin)
