@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import Sum 
+from django.db.models import Sum
+from django.urls import reverse
 from accounts.models import User
 # Create your models here.
 class Advertisement(models.Model):
@@ -7,11 +8,11 @@ class Advertisement(models.Model):
     this is a class for define advertisement for charity app
     '''
     raiser = models.ForeignKey('accounts.Profile', on_delete = models.CASCADE)
-    image = models.ImageField(upload_to ='ads/'  , null=True , blank=True)
+    image = models.ImageField(upload_to ='ads/', default = 'ads/default.jpg')
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = models.TextField(max_length = 700)
     status = models.BooleanField(default=True)
-    category = models.ForeignKey('Category', on_delete = models.SET_NULL,null = True)
+    category = models.ForeignKey('Category', on_delete = models.SET_NULL , null=True)
 
     estimated_amount = models.FloatField()
     collected_amount = models.FloatField(default = 0)
@@ -23,6 +24,12 @@ class Advertisement(models.Model):
     def __str__(self):
         return self.title
 
+    def get_snippet(self):
+        return self.content[0:144]
+
+    def get_absolute_api_url(self):
+        return reverse("charity:api-v1:ads-detail" , kwargs={"pk":self.pk})
+    
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -35,8 +42,11 @@ class Donation(models.Model):
     amount = models.FloatField()
     donated_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('donor', 'advertisement')
+    # class Meta:
+    #     unique_together = ('donor', 'advertisement')
+    
+
+
     
     def save(self, *args, **kwargs):
         self.advertisement.collected_amount += self.amount

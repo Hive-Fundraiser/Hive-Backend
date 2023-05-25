@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'accounts',
     'charity',
     'rest_framework',
-    'drf_spectacular'
+    'drf_spectacular',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -59,7 +63,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'HIVE Project API',
-    'DESCRIPTION': 'This is Hive project',
+    'DESCRIPTION': 'اعضا: محمدحسین اسناوندی - محمد دانایی نیا - پویا علوی - سپهر نوروزی',
     'VERSION': '1.0.0',
 }
 
@@ -147,3 +151,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #user manager config
 AUTH_USER_MODEL = 'accounts.User'
+
+CORS_ORIGIN_ALLOW_ALL = True
