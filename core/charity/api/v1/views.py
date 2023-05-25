@@ -11,7 +11,7 @@ from .paginations import DefaultPagination
 from .serializers import DonationSerializer
 
 class AdsModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
     serializer_class = AdsSerializer
     queryset = Advertisement.objects.filter(status=True)
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
@@ -21,12 +21,12 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     pagination_class = DefaultPagination
 
 class DonationViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Donation.objects.all()
     serializer_class = DonationSerializer
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     filter_backends = [DjangoFilterBackend,OrderingFilter]
