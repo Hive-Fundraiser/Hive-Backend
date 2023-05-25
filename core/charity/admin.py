@@ -6,6 +6,9 @@ class AdvertisementAdmin(admin.ModelAdmin):
 
 class DonationAdmin(admin.ModelAdmin):
     list_display = ['id' , 'donor' , 'advertisement' , 'amount']
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id' , 'name']
 admin.site.register(Advertisement,AdvertisementAdmin)
 admin.site.register(Category)
 admin.site.register(Donation,DonationAdmin)
