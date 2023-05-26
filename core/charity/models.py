@@ -17,6 +17,12 @@ class Advertisement(models.Model):
     estimated_amount = models.FloatField()
     collected_amount = models.FloatField(default = 0)
     
+    @property
+    def collected_percentage(self):
+        if self.estimated_amount == 0:
+            return 0
+        return round((self.collected_amount / self.estimated_amount),2) * 100
+    
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now = True)
     published_date = models.DateTimeField(null=True)
@@ -42,12 +48,6 @@ class Donation(models.Model):
     amount = models.FloatField()
     donated_at = models.DateTimeField(auto_now_add=True)
 
-    # class Meta:
-    #     unique_together = ('donor', 'advertisement')
-    
-
-
-    
     def save(self, *args, **kwargs):
         self.advertisement.collected_amount += self.amount
         self.advertisement.save()
