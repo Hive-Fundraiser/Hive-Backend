@@ -1,7 +1,7 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 class DefaultPagination(PageNumberPagination):
-    page_size = 4
+    page_size = 12
     def get_paginated_response(self, data):
         return Response({
             'links': {
@@ -10,6 +10,5 @@ class DefaultPagination(PageNumberPagination):
             },
             'total_objects': self.page.paginator.count,
             'total_pages': self.page.paginator.num_pages,
-            'current_page': self.page.number,
             'results': data
         })

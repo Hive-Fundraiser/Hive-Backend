@@ -3,7 +3,6 @@ from charity.models import Advertisement,Category,Donation
 from accounts.models import Profile
 class AdsSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source='get_snippet')
-    collected_percentage = serializers.FloatField(read_only=True)
     relative_url = serializers.URLField(
         source='get_absolute_api_url', read_only=True)
     absolute_url = serializers.SerializerMethodField()
@@ -12,7 +11,7 @@ class AdsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
         read_only_fields = ['raiser']
-        fields = ['id','image','title','raiser','snippet','content','category','status', 'relative_url', 'absolute_url','estimated_amount','collected_amount','collected_percentage','published_date',]
+        fields = ['id','image','title','raiser','snippet','content','category','status', 'relative_url', 'absolute_url','estimated_amount','collected_amount','published_date',]
 
     def get_absolute_url(self, obj):
         request = self.context.get('request')
