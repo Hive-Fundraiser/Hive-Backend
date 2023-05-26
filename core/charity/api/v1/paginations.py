@@ -10,5 +10,6 @@ class DefaultPagination(PageNumberPagination):
             },
             'total_objects': self.page.paginator.count,
             'total_pages': self.page.paginator.num_pages,
+            'current_page': self.page.number,
             'results': data
         })
