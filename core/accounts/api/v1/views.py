@@ -14,3 +14,4 @@ class RegistrationApiView(generics.GenericAPIView):
                 'email':serializer.validated_data['email']
             }
             return Response(data,status.HTTP_201_CREATED)
+        return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
