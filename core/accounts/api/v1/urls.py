@@ -10,10 +10,13 @@ from rest_framework_simplejwt.views import (
 app_name = 'api-v1'
 
 urlpatterns = [
+    #token
     path('registration/',views.RegistrationApiView.as_view(),name='registration'),
     path('token/login/',views.CustomObtainAuthToken.as_view(),name='token-login'),
     path('token/logout/',views.CustomDiscardToken.as_view(),name='token-logout'),
-    path('jwt/create/',TokenObtainPairView.as_view(),name='jwt-create'),
+
+    #jwt
+    path('jwt/create/',views.CustomTokenObtainPairView.as_view(),name='jwt-create'),
     path('jwt/refresh/',TokenRefreshView.as_view(),name='jwt-refresh'),
     path('jwt/verify/',TokenVerifyView.as_view(),name='jwt-verify')
 ]
