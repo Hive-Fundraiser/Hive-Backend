@@ -5,24 +5,46 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('accounts', '0003_auto_20230503_1656'),
-        ('charity', '0002_alter_advertisement_raiser'),
+        ("accounts", "0003_auto_20230503_1656"),
+        ("charity", "0002_alter_advertisement_raiser"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Donation',
+            name="Donation",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('donated_at', models.DateTimeField(auto_now_add=True)),
-                ('advertisement', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='charity.advertisement')),
-                ('donor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "amount",
+                    models.DecimalField(decimal_places=2, max_digits=10),
+                ),
+                ("donated_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "advertisement",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="charity.advertisement",
+                    ),
+                ),
+                (
+                    "donor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="accounts.profile",
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('donor', 'advertisement')},
+                "unique_together": {("donor", "advertisement")},
             },
         ),
     ]
