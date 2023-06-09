@@ -11,8 +11,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from mail_templated import EmailMessage
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
+from jwt.exceptions import ExpiredSignatureError,InvalidSignatureError
+import jwt
 from ..utils import EmailThread
 from accounts.models import User,Profile
+from django.conf import settings
 class RegistrationApiView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
 
