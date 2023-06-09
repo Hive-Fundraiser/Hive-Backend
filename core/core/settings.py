@@ -164,10 +164,9 @@ AUTH_USER_MODEL = 'accounts.User'
 CORS_ORIGIN_ALLOW_ALL = True
 
 # email configuration
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
-EMAIL_USE_SSL = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mhas1381@gmail.com'
+EMAIL_HOST_PASSWORD = 'gqjijldqgslmzheg' #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
