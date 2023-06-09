@@ -4,13 +4,16 @@ from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 from .users import User
 
+
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    phone_number = PhoneNumberField(null=True,blank=True)
-    avatar = models.ImageField(upload_to = 'profile/',default ='profile/default_avatar.jpg' )
-    bank_account_number = models.CharField(max_length=16 , null=True , blank=True)
+    phone_number = PhoneNumberField(null=True, blank=True)
+    avatar = models.ImageField(
+        upload_to="profile/", default="profile/default_avatar.jpg"
+    )
+    bank_account_number = models.CharField(max_length=16, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -21,5 +24,4 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
     if created:
-
         Profile.objects.create(user=instance)
