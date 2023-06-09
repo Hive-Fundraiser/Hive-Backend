@@ -6,7 +6,9 @@ from accounts.models import Profile
 class AdsSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source="get_snippet")
     collected_percentage = serializers.FloatField(read_only=True)
-    relative_url = serializers.URLField(source="get_absolute_api_url", read_only=True)
+    relative_url = serializers.URLField(
+        source="get_absolute_api_url", read_only=True
+    )
     absolute_url = serializers.SerializerMethodField()
 
     class Meta:

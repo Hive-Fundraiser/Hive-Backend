@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             model_name="advertisement",
             name="raiser",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="accounts.profile"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="accounts.profile",
             ),
         ),
     ]

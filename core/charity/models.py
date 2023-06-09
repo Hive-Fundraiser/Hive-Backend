@@ -15,7 +15,9 @@ class Advertisement(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(max_length=700)
     status = models.BooleanField(default=True)
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(
+        "Category", on_delete=models.SET_NULL, null=True
+    )
 
     estimated_amount = models.FloatField()
     collected_amount = models.FloatField(default=0)

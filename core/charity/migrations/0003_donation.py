@@ -23,7 +23,10 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("amount", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "amount",
+                    models.DecimalField(decimal_places=2, max_digits=10),
+                ),
                 ("donated_at", models.DateTimeField(auto_now_add=True)),
                 (
                     "advertisement",

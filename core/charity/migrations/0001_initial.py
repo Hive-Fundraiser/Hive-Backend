@@ -42,13 +42,18 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "image",
-                    models.ImageField(default="blog/default.jpg", upload_to="ads/"),
+                    models.ImageField(
+                        default="blog/default.jpg", upload_to="ads/"
+                    ),
                 ),
                 ("title", models.CharField(max_length=255)),
                 ("content", models.TextField()),
                 ("status", models.BooleanField(default=True)),
                 ("estimated_amount", models.FloatField()),
-                ("collected_amount", models.FloatField(blank=True, null=True)),
+                (
+                    "collected_amount",
+                    models.FloatField(blank=True, null=True),
+                ),
                 ("created_date", models.DateTimeField(auto_now_add=True)),
                 ("updated_date", models.DateTimeField(auto_now=True)),
                 ("published_date", models.DateTimeField(null=True)),
