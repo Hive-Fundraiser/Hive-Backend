@@ -1,8 +1,6 @@
-from django.urls import path, include
+from django.urls import path
 from .. import views
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )

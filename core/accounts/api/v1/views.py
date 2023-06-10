@@ -1,14 +1,6 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import (
-    RegistrationSerializer,
-    CustomAuthTokenSerializer,
-    CustomTokenObtainPairSerializer,
-    ChangePasswordSerialier,
-    ProfileSerializer,
-    ActivationResendSerializer,
-)
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
@@ -19,9 +11,19 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 import jwt
+from django.conf import settings
+
+from .serializers import (
+    RegistrationSerializer,
+    CustomAuthTokenSerializer,
+    CustomTokenObtainPairSerializer,
+    ChangePasswordSerialier,
+    ProfileSerializer,
+    ActivationResendSerializer,
+)
 from ..utils import EmailThread
 from accounts.models import User, Profile
-from django.conf import settings
+
 
 
 class RegistrationApiView(generics.GenericAPIView):
