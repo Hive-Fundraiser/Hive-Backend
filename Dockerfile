@@ -9,7 +9,7 @@ COPY requirements.txt .
 
 RUN pip config set global.index-url https://pypi.iranrepo.ir/simple
 RUN pip3 install --upgrade pip
-COPY ./requirements.txt /requirements.txt
+COPY ./requirements.txt /app
 RUN pip3 install -r requirements.txt
 
 COPY ./core /app/
