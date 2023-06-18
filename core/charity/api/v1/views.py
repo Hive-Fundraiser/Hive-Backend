@@ -8,11 +8,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
-from .serializers import AdsSerializer, CategorySerializer ,DonationSerializer
+from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
 from charity.models import Advertisement, Category, Donation
 
+
 class AdsModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = AdsSerializer
     queryset = Advertisement.objects.filter(status=True)
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
