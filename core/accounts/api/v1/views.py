@@ -25,7 +25,6 @@ from ..utils import EmailThread
 from accounts.models import User, Profile
 
 
-
 class RegistrationApiView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
 

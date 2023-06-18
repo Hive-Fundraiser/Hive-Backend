@@ -43,7 +43,7 @@ class TestPostApi:
             "title": "test",
             "content": "description",
             "status": True,
-            "estimated_amount" : 0,
+            "estimated_amount": 0,
             "published_date": datetime.now(),
         }
         user = common_user
@@ -55,22 +55,24 @@ class TestPostApi:
         self, api_client, common_user
     ):
         url = reverse("charity:api-v1:ads-list")
-        data = {"title": "test", "content": "description" ,
-        "status": True,"published_date": datetime.now(),}
+        data = {
+            "title": "test",
+            "content": "description",
+            "status": True,
+            "published_date": datetime.now(),
+        }
         user = common_user
 
         api_client.force_authenticate(user=user)
         response = api_client.post(url, data)
         assert response.status_code == 400
-    
+
+
 @pytest.mark.django_db
 class TestDonationApi:
     def test_create_donations_response_401_status(self, api_client):
         url = reverse("charity:api-v1:donation-list")
-        data = {
-        "advertisement": 1,
-        "amount": 1
-        }
+        data = {"advertisement": 1, "amount": 1}
         response = api_client.post(url, data)
         assert response.status_code == 401
 
@@ -78,10 +80,7 @@ class TestDonationApi:
         self, api_client, common_user
     ):
         url = reverse("charity:api-v1:donation-list")
-        data = {
-        "advertisement": 1,
-        "amount": 1
-        }
+        data = {"advertisement": 1, "amount": 1}
         user = common_user
 
         api_client.force_authenticate(user=user)
