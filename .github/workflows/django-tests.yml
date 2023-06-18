@@ -16,4 +16,4 @@ jobs:
     - name: Setup Docker-Compose
       run: docker-compose up -d
     - name: Run Tests
-      run: docker exec hive sh -c "pytest ."
+      run: docker exec hive sh -c "pytest ." 
