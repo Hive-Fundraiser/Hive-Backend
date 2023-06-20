@@ -40,14 +40,18 @@ class Command(BaseCommand):
                 estimated_amount=self.fake.random_number(fix_len=False),
                 published_date=datetime.now(),
             )
-            for _ in range(random.randint(0, 5)):
-                random_index = random.randint(0, num_advertisements - 1)
 
-                # Retrieve a single random Advertisement object:
-                random_advertisement = Advertisement.objects.all()[random_index]
-                Donation.objects.create(
-                    donor=profile,
-                    advertisement=Advertisement.objects.get(id = 4),
-                    amount=self.fake.random_number(fix_len=False) / 10,
-                    donated_at=datetime.now(),
-                )
+
+        for _ in range(random.randint(0 , 10)):
+            # Generate a random index between 0 and num_advertisements - 1:
+            random_index = random.randint(0, num_advertisements - 1)
+
+            # Retrieve a single random Advertisement object:
+            random_advertisement = Advertisement.objects.all()[random_index]
+
+            Donation.objects.create(
+                donor=profile,
+                advertisement=random_advertisement,
+                amount=self.fake.random_number(fix_len=False) / 10,
+                donated_at=datetime.now(),
+            )
