@@ -36,14 +36,14 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    # django packages
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "charity",
+    # third parties
     "rest_framework",
     "drf_spectacular",
     "django_filters",
@@ -51,6 +51,10 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "mail_templated",
+    # apps
+    "accounts",
+    "charity",
+
 ]
 
 MIDDLEWARE = [
