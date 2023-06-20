@@ -5,11 +5,11 @@ import random
 from datetime import datetime
 
 from accounts.models import User, Profile
-from charity.models import Advertisement, Category
+from charity.models import Advertisement, Category , Donation
 
 
 category_list = ["IT", "Design", "Fun"]
-
+num_advertisements = Advertisement.objects.count()
 
 class Command(BaseCommand):
     help = "inserting dummy data"
@@ -40,3 +40,14 @@ class Command(BaseCommand):
                 estimated_amount=self.fake.random_number(fix_len=False),
                 published_date=datetime.now(),
             )
+            for _ in range(random.randint(0, 5)):
+                random_index = random.randint(0, num_advertisements - 1)
+
+                # Retrieve a single random Advertisement object:
+                random_advertisement = Advertisement.objects.all()[random_index]
+                Donation.objects.create(
+                    donor=profile,
+                    advertisement=Advertisement.objects.get(id = 4),
+                    amount=self.fake.random_number(fix_len=False) / 10,
+                    donated_at=datetime.now(),
+                )
