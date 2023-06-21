@@ -10,7 +10,7 @@ class AdsSerializer(serializers.ModelSerializer):
         source="get_absolute_api_url", read_only=True
     )
     absolute_url = serializers.SerializerMethodField()
-
+    raiser_full_name = serializers.SerializerMethodField()
     class Meta:
         model = Advertisement
         read_only_fields = ["raiser"]
@@ -18,7 +18,7 @@ class AdsSerializer(serializers.ModelSerializer):
             "id",
             "image",
             "title",
-            "raiser",
+            "raiser_full_name",
             "snippet",
             "content",
             "category",
@@ -30,6 +30,8 @@ class AdsSerializer(serializers.ModelSerializer):
             "collected_percentage",
             "published_date",
         ]
+    def get_raiser_full_name(self, obj):
+        return obj.raiser.get_full_name()
 
     def get_absolute_url(self, obj):
         request = self.context.get("request")
