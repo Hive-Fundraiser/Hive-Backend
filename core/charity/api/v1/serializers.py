@@ -59,17 +59,20 @@ class AdsSerializer(serializers.ModelSerializer):
 
 
 class DonationSerializer(serializers.ModelSerializer):
+    donor_full_name = serializers.SerializerMethodField()
     class Meta:
         read_only_fields = ["donor"]
         model = Donation
-        fields = ["id", "donor", "advertisement", "amount"]
+        fields = ["id", "donor_full_name", "advertisement", "amount"]
 
     def create(self, validated_data):
         validated_data["donor"] = Profile.objects.get(
             user__id=self.context.get("request").user.id
         )
         return super().create(validated_data)
-
+    
+    def get_donor_full_name(self, obj):
+        return obj.donor.get_full_name()
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

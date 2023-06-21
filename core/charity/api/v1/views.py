@@ -23,16 +23,6 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     ordering_fields = ["published_date"]
     pagination_class = DefaultPagination
 
-    @action(detail=True, methods=['get'])
-    def raiser_name(self, request, pk=None):
-        try:
-            advertisement = self.get_object()
-            full_name = advertisement.raiser.get_full_name()
-            return Response({'full_name': full_name})
-
-        except Advertisement.DoesNotExist:
-            return Response(status=404, data={'message': 'Advertisement not found'})
-
 
 class DonationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
