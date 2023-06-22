@@ -14,13 +14,13 @@ master:
     ports:
     - "8089:8089"
     volumes:
-      - ./:/mnt/locust
+      - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --master -H http://hive:8089
   
   worker:
     image: locustio/locust
     volumes:
-      - ./:/mnt/locust
+      - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker --master-host master
 
     
