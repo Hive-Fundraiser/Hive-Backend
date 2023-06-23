@@ -15,7 +15,7 @@ master:
     - "8089:8089"
     volumes:
       - ./core/locust:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H http://hive:8089
+    command: -f /mnt/locust/locustfile.py --master -H http://hive:8080
   
   worker:
     image: locustio/locust
