@@ -10,4 +10,5 @@ app_name = "api-v1"
 
 urlpatterns = []
 
+
 urlpatterns += router.urls
