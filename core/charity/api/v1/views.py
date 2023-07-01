@@ -8,6 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
 from django.db.models import Count
+from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
 from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
@@ -23,6 +24,13 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     search_fields = ["title", "content"]
     ordering_fields = ["published_date"]
     pagination_class = DefaultPagination
+
+    @action(detail=True, methods=['get'])
+    def donators(self, request, pk=None):
+        advertisement = self.get_object()
+        donators = Donation.objects.filter(advertisement=advertisement)
+        serializer = DonationSerializer(donators, many=True)
+        return Response(serializer.data)
 
 
 class DonationViewSet(viewsets.ModelViewSet):
