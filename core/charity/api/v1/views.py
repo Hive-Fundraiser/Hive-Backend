@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
+from django.db.models import Count
 from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
 from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
@@ -37,3 +38,8 @@ class CategoryModelViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ["donated_at"]
     pagination_class = DefaultPagination
+
+class PopularAdvertisementsViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = Advertisement.objects.annotate(donation_count=Count('donation')).order_by('-donation_count')[:5]
+    serializer_class = AdsSerializer
