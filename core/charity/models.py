@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Sum
 from django.urls import reverse
 from accounts.models import User
-
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Advertisement(models.Model):
@@ -32,6 +32,21 @@ class Advertisement(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(null=True)
 
+    def clean(self):
+        super().clean()
+
+        if self.estimated_amount < 0:
+            raise ValidationError("Estimated amount cannot be negative.")
+
+        if self.collected_amount < 0:
+            raise ValidationError("Collected amount cannot be negative.")
+        
+        if len(self.title) > 255:
+            raise ValidationError("title length cannot exceed 255 characters.")
+
+        if len(self.content) > 700:
+            raise ValidationError("Content length cannot exceed 700 characters.")
+        
     def __str__(self):
         return self.title
 
@@ -59,6 +74,21 @@ class Donation(models.Model):
         self.advertisement.collected_amount += self.amount
         self.advertisement.save()
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.advertisement.title
+
+    def clean(self):
+        super().clean()
+
+        if self.amount < 0:
+            raise ValidationError("Amount cannot be negative.")
+
+        if self.amount > self.advertisement.estimated_amount:
+            raise ValidationError("Amount cannot be greater than the estimated amount.")
+
+        if self.amount > (self.advertisement.estimated_amount - self.advertisement.collected_amount):
+            raise ValidationError("Amount cannot be greater than the remaining amount to be collected.")
 
     def __str__(self):
         return self.advertisement.title
