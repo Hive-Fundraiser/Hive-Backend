@@ -11,6 +11,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 import jwt
+from rest_framework import viewsets
+from rest_framework.parsers import MultiPartParser
 from django.conf import settings
 
 from .serializers import (
@@ -109,10 +111,11 @@ class ChangePasswordApiView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProfileApiView(generics.RetrieveUpdateAPIView):
+class ProfileApiView(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser]
 
     def get_object(self):
         queryset = self.get_queryset()
