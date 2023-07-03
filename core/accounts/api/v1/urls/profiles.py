@@ -1,4 +1,12 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from .. import views
 
-urlpatterns = [path("", views.ProfileApiView.as_view(), name="profile")]
+
+router = DefaultRouter()
+router.register("", views.ProfileApiView, basename="profile")
+
+urlpatterns = [
+
+]
+urlpatterns += router.urls
