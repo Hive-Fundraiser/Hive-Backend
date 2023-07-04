@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
-from .users import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Profile(models.Model):
@@ -24,6 +26,12 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def is_complete(self):
+        # Add your logic to determine if the profile is complete
+        return (
+            self.first_name and self.last_name
+        )
 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):

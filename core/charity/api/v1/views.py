@@ -24,7 +24,15 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     search_fields = ["title", "content"]
     ordering_fields = ["published_date"]
     pagination_class = DefaultPagination
-
+    
+    def create(self, request, *args, **kwargs):
+        # Check if the user has completed their profile before creating the advertisement
+        profile = request.user.profile_set.first()  # Assuming 'profile' is the related name of the foreign key field
+        if not profile or not profile.is_complete():
+            return Response({"error": "Please complete your profile before posting an advertisement."}, status=400)
+        
+        return super().create(request, *args, **kwargs)
+    
     @action(detail=True, methods=['get'])
     def donators(self, request, pk=None):
         advertisement = self.get_object()
