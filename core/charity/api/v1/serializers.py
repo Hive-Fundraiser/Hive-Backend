@@ -6,15 +6,17 @@ from accounts.models import Profile
 class AdsSerializer(serializers.ModelSerializer):
     snippet = serializers.ReadOnlyField(source="get_snippet")
     collected_percentage = serializers.FloatField(read_only=True)
-    relative_url = serializers.URLField(source="get_absolute_api_url", read_only=True)
+    relative_url = serializers.URLField(
+        source="get_absolute_api_url", read_only=True
+    )
     absolute_url = serializers.SerializerMethodField()
     raiser_full_name = serializers.SerializerMethodField()
-
     class Meta:
         model = Advertisement
         read_only_fields = ["raiser"]
         fields = [
             "id",
+            "image",
             "title",
             "raiser_full_name",
             "snippet",
@@ -28,7 +30,6 @@ class AdsSerializer(serializers.ModelSerializer):
             "collected_percentage",
             "published_date",
         ]
-
     def get_raiser_full_name(self, obj):
         return obj.raiser.get_full_name()
 
@@ -57,18 +58,8 @@ class AdsSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class AdsImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Advertisement
-        read_only_fields = []
-        fields = [
-            "image",
-        ]
-
-
 class DonationSerializer(serializers.ModelSerializer):
     donor_full_name = serializers.SerializerMethodField()
-
     class Meta:
         read_only_fields = ["donor"]
         model = Donation
@@ -79,10 +70,9 @@ class DonationSerializer(serializers.ModelSerializer):
             user__id=self.context.get("request").user.id
         )
         return super().create(validated_data)
-
+    
     def get_donor_full_name(self, obj):
         return obj.donor.get_full_name()
-
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

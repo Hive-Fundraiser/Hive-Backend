@@ -6,5 +6,7 @@ from .. import views
 router = DefaultRouter()
 router.register("", views.ProfileApiView, basename="profile")
 
-urlpatterns = []
+urlpatterns = [
+
+]
 urlpatterns += router.urls

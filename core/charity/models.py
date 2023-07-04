@@ -4,7 +4,6 @@ from django.urls import reverse
 from accounts.models import User
 from django.core.exceptions import ValidationError
 
-
 # Create your models here.
 class Advertisement(models.Model):
     """
@@ -16,7 +15,9 @@ class Advertisement(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(max_length=700)
     status = models.BooleanField(default=True)
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(
+        "Category", on_delete=models.SET_NULL, null=True
+    )
 
     estimated_amount = models.FloatField()
     collected_amount = models.FloatField(default=0)
@@ -39,13 +40,13 @@ class Advertisement(models.Model):
 
         if self.collected_amount < 0:
             raise ValidationError("Collected amount cannot be negative.")
-
+        
         if len(self.title) > 255:
             raise ValidationError("title length cannot exceed 255 characters.")
 
         if len(self.content) > 700:
             raise ValidationError("Content length cannot exceed 700 characters.")
-
+        
     def __str__(self):
         return self.title
 
@@ -81,20 +82,16 @@ class Donation(models.Model):
         super().clean()
 
         if self.collected_amount >= self.estimated_amount:
-            self.status = False
-
+            self.status = False 
+            
         if self.amount < 0:
             raise ValidationError("Amount cannot be negative.")
 
         if self.amount > self.advertisement.estimated_amount:
             raise ValidationError("Amount cannot be greater than the estimated amount.")
 
-        if self.amount > (
-            self.advertisement.estimated_amount - self.advertisement.collected_amount
-        ):
-            raise ValidationError(
-                "Amount cannot be greater than the remaining amount to be collected."
-            )
+        if self.amount > (self.advertisement.estimated_amount - self.advertisement.collected_amount):
+            raise ValidationError("Amount cannot be greater than the remaining amount to be collected.")
 
     def __str__(self):
         return self.advertisement.title

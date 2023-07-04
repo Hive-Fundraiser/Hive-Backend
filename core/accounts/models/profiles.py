@@ -13,7 +13,9 @@ class Profile(models.Model):
     avatar = models.ImageField(
         upload_to="profile/", default="profile/default_avatar.jpg"
     )
-    bank_account_number = models.CharField(max_length=16, null=True, blank=True)
+    bank_account_number = models.CharField(
+        max_length=16, null=True, blank=True
+    )
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -22,7 +24,6 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
-
 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):

@@ -42,7 +42,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "image",
-                    models.ImageField(default="blog/default.jpg", upload_to="ads/"),
+                    models.ImageField(
+                        default="blog/default.jpg", upload_to="ads/"
+                    ),
                 ),
                 ("title", models.CharField(max_length=255)),
                 ("content", models.TextField()),
