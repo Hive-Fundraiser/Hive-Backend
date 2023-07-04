@@ -135,12 +135,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-JWT_AUTH = {
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=2),
-    "JWT_ALLOW_REFRESH": True,
-    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
