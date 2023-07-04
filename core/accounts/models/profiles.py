@@ -30,7 +30,7 @@ class Profile(models.Model):
     def is_complete(self):
         # Add your logic to determine if the profile is complete
         return (
-            self.first_name and self.last_name
+            self.first_name and self.last_name and self.bank_account_number 
         )
 
 @receiver(post_save, sender=User)
