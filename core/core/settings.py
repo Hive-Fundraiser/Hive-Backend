@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -169,6 +169,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # user manager config
 AUTH_USER_MODEL = "accounts.User"
+
+# jwt configs
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
