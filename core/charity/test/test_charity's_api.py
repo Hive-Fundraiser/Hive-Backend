@@ -51,9 +51,7 @@ class TestPostApi:
         response = api_client.post(url, data)
         assert response.status_code == 201
 
-    def test_create_ad_invalid_data_response_400_status(
-        self, api_client, common_user
-    ):
+    def test_create_ad_invalid_data_response_400_status(self, api_client, common_user):
         url = reverse("charity:api-v1:ads-list")
         data = {
             "title": "test",
