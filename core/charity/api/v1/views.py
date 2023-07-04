@@ -45,7 +45,13 @@ class DonationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Donation.objects.all()
     serializer_class = DonationSerializer
-
+    def create(self, request, *args, **kwargs):
+        # Check if the user has completed their profile before creating the advertisement
+        profile = request.user.profile_set.first()  # Assuming 'profile' is the related name of the foreign key field
+        if not profile or not profile.is_complete():
+            return Response({"error": "Please complete your profile before donating"}, status=400)
+        
+        return super().create(request, *args, **kwargs)
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
