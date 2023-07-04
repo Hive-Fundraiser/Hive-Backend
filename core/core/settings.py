@@ -172,7 +172,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 # jwt configs
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
     'AUTH_HEADER_TYPES': ('JWT',),
 }
 
