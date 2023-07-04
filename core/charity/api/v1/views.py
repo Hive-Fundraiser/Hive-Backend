@@ -25,7 +25,7 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     ordering_fields = ["published_date"]
     pagination_class = DefaultPagination
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def donators(self, request, pk=None):
         advertisement = self.get_object()
         donators = Donation.objects.filter(advertisement=advertisement)
@@ -47,7 +47,10 @@ class CategoryModelViewSet(viewsets.ModelViewSet):
     ordering_fields = ["donated_at"]
     pagination_class = DefaultPagination
 
+
 class PopularAdvertisementsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Advertisement.objects.annotate(donation_count=Count('donation')).order_by('-donation_count')[:5]
+    queryset = Advertisement.objects.annotate(
+        donation_count=Count("donation")
+    ).order_by("-donation_count")[:5]
     serializer_class = AdsSerializer
