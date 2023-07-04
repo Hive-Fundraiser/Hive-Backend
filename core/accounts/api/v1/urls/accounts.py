@@ -45,6 +45,10 @@ urlpatterns = [
         views.CustomDiscardAuthToken.as_view(),
         name="token-logout",
     ),
+    
+    # reset password 
+     path("reset-password/", views.ResetPasswordApiView.as_view(), name="reset-password"),
+
     # login jwt
     path(
         "jwt/create/",

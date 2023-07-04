@@ -8,6 +8,7 @@ from .serializers import (
     ChangePasswordSerialier,
     ProfileSerializer,
     ActivationResendSerializer,
+    ResetPasswordSerializer,
 )
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -19,6 +20,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 import jwt
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.hashers import make_password
 from ..utils import EmailThread
 from accounts.models import User, Profile
 from django.conf import settings
@@ -193,3 +200,29 @@ class ActivationResendApiView(generics.GenericAPIView):
     def get_tokens_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
+
+class ResetPasswordApiView(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = ResetPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data["email"]
+            user_obj = get_object_or_404(User, email=email)
+            context = {
+                "user": user_obj,
+                "uid": urlsafe_base64_encode(force_bytes(user_obj.pk)),
+                "token": default_token_generator.make_token(user_obj),
+                "reset_password_url": "http://127.0.0.1:8000/accounts/api/v1/reset-password/",  # Replace with your actual reset password URL
+                "request": request,
+            }
+            email_body = render_to_string("email/reset_password_email.tpl", context)
+            email_obj = EmailMessage(
+                "Reset Password",
+                email_body,
+                "admin@admin.com",
+                to=[email],
+            )
+            EmailThread(email_obj).start()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
