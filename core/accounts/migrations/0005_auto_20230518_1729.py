@@ -4,18 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
-        ("accounts", "0004_alter_profile_avatar"),
+        ('accounts', '0004_alter_profile_avatar'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name="profile",
-            name="description",
+            model_name='profile',
+            name='description',
         ),
         migrations.AlterField(
-            model_name="profile",
-            name="bank_account_number",
+            model_name='profile',
+            name='bank_account_number',
             field=models.CharField(blank=True, max_length=16, null=True),
         ),
     ]

@@ -4,14 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
-        ("charity", "0003_donation"),
+        ('charity', '0003_donation'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="donation",
-            name="amount",
+            model_name='donation',
+            name='amount',
             field=models.FloatField(),
         ),
     ]
