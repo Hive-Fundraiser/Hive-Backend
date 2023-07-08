@@ -1,11 +1,11 @@
 # exceptions.py
 
 class EmailNotProvidedError(ValueError):
-    def __init__(self, message="The email must be set."):
+    def __init__(self, message="ابتدا ایمیل باید وارد شود."):
         super().__init__(message)
 
 
 class InvalidSuperuserError(ValueError):
-    def __init__(self, message="Superuser must have is_staff=True."):
+    def __init__(self, message="ایمیل وارد شده برای سوپر یوزر معتبر نیست."):
         super().__init__(message)
 

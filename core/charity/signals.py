@@ -9,4 +9,4 @@ def validate_image(sender, instance, **kwargs):
     if instance.image:
         # Check if the image size is too large
         if instance.image.size > 1024 * 1024:
-            raise ImageUploadError("Image size must be less than 1 MB")
+            raise ImageUploadError("سایز عکس بیش از حد مجاز است")

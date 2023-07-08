@@ -40,10 +40,10 @@ class Advertisement(models.Model):
 
     def save(self, *args, **kwargs):
         if len(self.title.strip()) < 3:
-            raise InvalidTitleError("Advertisement title must be at least 3 characters long")
+            raise InvalidTitleError("موضوع آگهی باید حداقل 3 کاراکتر باشد")
 
         if len(self.content.strip()) < 10:
-            raise InvalidContentError("Advertisement content must be at least 10 characters long")
+            raise InvalidContentError("متن آگهی باید حداقل 10 کاراکتر باشد")
 
         super().save(*args, **kwargs)
 
@@ -63,7 +63,7 @@ class Donation(models.Model):
 
     def save(self, *args, **kwargs):
         if self.amount <= 0:
-            raise InvalidDonationAmountError("Donation amount must be greater than zero")
+            raise InvalidDonationAmountError("مبلغ وارد شده صحیح نمی باشد")
 
         self.advertisement.collected_amount += self.amount
         self.advertisement.save()
