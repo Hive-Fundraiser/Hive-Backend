@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from .exeptions import EmailAlreadyVerified, UserNotFound
 from ...models import User, Profile
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
@@ -121,12 +123,8 @@ class ActivationResendSerializer(serializers.Serializer):
         try:
             user_obj = User.objects.get(email=email)
         except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "user does not exist"}
-            )
+            raise UserNotFound()
         if user_obj.is_verified:
-            raise serializers.ValidationError(
-                {"detail": "user is already activated and verified"}
-            )
+            raise EmailAlreadyVerified()
         attrs["user"] = user_obj
         return super().validate(attrs)

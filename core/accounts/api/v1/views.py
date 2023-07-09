@@ -15,6 +15,7 @@ from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser
 from django.conf import settings
 
+from .exeptions import InvalidOrExpiredToken, EmailAlreadyVerified
 from .serializers import (
     RegistrationSerializer,
     CustomAuthTokenSerializer,
@@ -100,7 +101,7 @@ class ChangePasswordApiView(generics.GenericAPIView):
         if serializer.is_valid():
             # Check old password
             if not self.object.check_password(
-                serializer.data.get("old_password")
+                    serializer.data.get("old_password")
             ):
                 return Response(
                     {"old_password": ["Wrong password."]},
@@ -155,15 +156,11 @@ class ActivationApiView(APIView):
             )
             user_id = token.get("user_id")
         except ExpiredSignatureError:
-            return Response(
-                {"details": "token has been expired"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            raise InvalidOrExpiredToken()
+
         except InvalidSignatureError:
-            return Response(
-                {"details": "token is not valid"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            raise EmailAlreadyVerified()
+
         user_obj = User.objects.get(pk=user_id)
 
         if user_obj.is_verified:
