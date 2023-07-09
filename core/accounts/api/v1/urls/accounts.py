@@ -55,4 +55,6 @@ urlpatterns = [
     # is_verfied
     path('user-verified/', views.IsUserVerifiedAPIView.as_view(), name='user-verified'),
 
+    # delete account
+    path('delete-account/', views.DeleteAccountAPIView.as_view(), name='delete-account'),
 ]

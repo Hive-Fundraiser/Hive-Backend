@@ -201,3 +201,14 @@ class IsUserVerifiedAPIView(APIView):
         user = request.user
         is_verified = user.is_verified
         return Response({"is_verified": is_verified})
+
+class DeleteAccountAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response(
+            {"message": "User account deleted successfully."},
+            status=status.HTTP_204_NO_CONTENT,
+        )
