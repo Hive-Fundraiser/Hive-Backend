@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from mail_templated import EmailMessage
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,redirect
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 import jwt
 from rest_framework import viewsets
@@ -164,16 +164,10 @@ class ActivationApiView(APIView):
         user_obj = User.objects.get(pk=user_id)
 
         if user_obj.is_verified:
-            return Response(
-                {"details": "your account has already been verified"}
-            )
+            return redirect("127.0.0.1:3000")
         user_obj.is_verified = True
         user_obj.save()
-        return Response(
-            {
-                "details": "your account have been verified and activated successfully"
-            }
-        )
+        return redirect("127.0.0.1:3000")
 
 
 class ActivationResendApiView(generics.GenericAPIView):
@@ -199,3 +193,11 @@ class ActivationResendApiView(generics.GenericAPIView):
     def get_tokens_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
+
+class IsUserVerifiedAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        is_verified = user.is_verified
+        return Response({"is_verified": is_verified})
