@@ -26,6 +26,12 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     pagination_class = DefaultPagination
 
 
+class AdvertisementModelViewSet(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    serializer_class = AdsSerializer
+    queryset = Advertisement.objects.filter(status=True)
+
+
 class DonationViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Donation.objects.all()

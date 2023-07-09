@@ -67,9 +67,7 @@ class CustomObtainAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response(
-            {"token": token.key, "user_id": user.pk, "email": user.email}
-        )
+        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
 
 
 class CustomDiscardAuthToken(APIView):
@@ -98,9 +96,7 @@ class ChangePasswordApiView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(
-                serializer.data.get("old_password")
-            ):
+            if not self.object.check_password(serializer.data.get("old_password")):
                 return Response(
                     {"old_password": ["Wrong password."]},
                     status=status.HTTP_400_BAD_REQUEST,
@@ -148,9 +144,7 @@ class EmailSend(generics.GenericAPIView):
 class ActivationApiView(APIView):
     def get(self, request, token, *args, **kwargs):
         try:
-            token = jwt.decode(
-                token, settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             user_id = token.get("user_id")
         except ExpiredSignatureError:
             return Response(
@@ -165,15 +159,11 @@ class ActivationApiView(APIView):
         user_obj = User.objects.get(pk=user_id)
 
         if user_obj.is_verified:
-            return Response(
-                {"details": "your account has already been verified"}
-            )
+            return Response({"details": "your account has already been verified"})
         user_obj.is_verified = True
         user_obj.save()
         return Response(
-            {
-                "details": "your account have been verified and activated successfully"
-            }
+            {"details": "your account have been verified and activated successfully"}
         )
 
 
@@ -200,6 +190,7 @@ class ActivationResendApiView(generics.GenericAPIView):
     def get_tokens_for_user(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
+
 
 class ResetPasswordApiView(generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer

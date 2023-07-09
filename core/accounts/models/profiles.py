@@ -13,9 +13,7 @@ class Profile(models.Model):
     avatar = models.ImageField(
         upload_to="profile/", default="profile/default_avatar.jpg"
     )
-    bank_account_number = models.CharField(
-        max_length=16, null=True, blank=True
-    )
+    bank_account_number = models.CharField(max_length=16, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
