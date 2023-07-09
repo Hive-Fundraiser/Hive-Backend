@@ -36,16 +36,16 @@ class Advertisement(models.Model):
         super().clean()
 
         if self.estimated_amount < 0:
-            raise ValidationError("Estimated amount cannot be negative.")
+            raise ValidationError("مقدار نمی تواند منفی باشد")
 
         if self.collected_amount < 0:
-            raise ValidationError("Collected amount cannot be negative.")
+            raise ValidationError("مبلغ جمع آوری شده نمی تواند منفی باشد.")
         
         if len(self.title) > 255:
-            raise ValidationError("title length cannot exceed 255 characters.")
+            raise ValidationError("موضوع نمی تواند بیشتر از 255 کاراکتر باشد")
 
         if len(self.content) > 700:
-            raise ValidationError("Content length cannot exceed 700 characters.")
+            raise ValidationError("متن نمی تواند بیشتر از 500 کاراکتر باشد")
         
     def __str__(self):
         return self.title
@@ -85,13 +85,13 @@ class Donation(models.Model):
             self.status = False 
             
         if self.amount < 0:
-            raise ValidationError("Amount cannot be negative.")
+            raise ValidationError("مقدار نمی تواند منفی باشد")
 
         if self.amount > self.advertisement.estimated_amount:
-            raise ValidationError("Amount cannot be greater than the estimated amount.")
+            raise ValidationError("مبلغ نمی تواند بیشتر از میزان اعتبار باشد")
 
         if self.amount > (self.advertisement.estimated_amount - self.advertisement.collected_amount):
-            raise ValidationError("Amount cannot be greater than the remaining amount to be collected.")
+            raise ValidationError("مبلغ نمی تواند از مقدار جمع آوری شده بیشتر باشد")
 
     def __str__(self):
         return self.advertisement.title
