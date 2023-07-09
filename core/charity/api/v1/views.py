@@ -41,7 +41,12 @@ class AdsModelViewSet(viewsets.ModelViewSet):
         donators = Donation.objects.filter(advertisement=advertisement)
         serializer = DonationSerializer(donators, many=True)
         return Response(serializer.data)
-
+    
+    @action(detail=False, methods=['get'])
+    def all_donators(self, request):
+        donators = Donation.objects.all()
+        serializer = DonationSerializer(donators, many=True)
+        return Response(serializer.data)
 
 class DonationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
