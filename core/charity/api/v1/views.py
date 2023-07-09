@@ -63,5 +63,5 @@ class CategoryModelViewSet(viewsets.ModelViewSet):
 
 class PopularAdvertisementsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Advertisement.objects.annotate(donation_count=Count('donation')).order_by('-donation_count')[:5]
+    queryset = Advertisement.objects.annotate(donation_count=Count('donation')).order_by('-donation_count')[:7]
     serializer_class = AdsSerializer
