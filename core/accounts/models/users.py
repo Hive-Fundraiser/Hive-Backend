@@ -15,7 +15,7 @@ class MyUserManager(BaseUserManager):
         Create and save a User with the given email and password and extra date.
         """
         if not email:
-            raise ValueError(_("the Email must be set."))
+            raise ValueError(_("ایمیل باید ست شود"))
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)

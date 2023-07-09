@@ -20,7 +20,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get("password") != attrs.get("password1"):
             raise serializers.ValidationError(
-                {"details": "passwords does not match"}
+                {"details": "پسورد ها یکسان نیستند"}
             )
 
         try:
@@ -63,7 +63,7 @@ class CustomAuthTokenSerializer(serializers.Serializer):
                 raise serializers.ValidationError(msg, code="authorization")
             if not self.user.is_verified:
                 raise serializers.ValidationError(
-                    {"details": "user is not verified"}
+                    {"details": "کاربر تایید نشده است"}
                 )
         else:
             msg = _('Must include "username" and "password".')
@@ -78,7 +78,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         validated_data = super().validate(attrs)
         if not self.user.is_verified:
             raise serializers.ValidationError(
-                {"details": "user is not verified"}
+                {"details": "کاربر تایید نشده است"}
             )
         validated_data["email"] = self.user.email
         validated_data["user_id"] = self.user.id
@@ -93,7 +93,7 @@ class ChangePasswordSerialier(serializers.Serializer):
     def validate(self, attrs):
         if attrs.get("new_password") != attrs.get("new_password1"):
             raise serializers.ValidationError(
-                {"detail": "passswords doesnt match"}
+                {"detail": "پسورد ها مطابقت ندارد"}
             )
 
         try:
