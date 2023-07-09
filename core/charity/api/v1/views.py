@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
+    IsAuthenticated,
 )
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -13,6 +14,7 @@ from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
 from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
 from charity.models import Advertisement, Category, Donation
+from accounts.models import Profile
 
 
 class AdsModelViewSet(viewsets.ModelViewSet):
@@ -65,3 +67,15 @@ class PopularAdvertisementsViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Advertisement.objects.annotate(donation_count=Count('donation')).order_by('-donation_count')[:7]
     serializer_class = AdsSerializer
+
+class UserAdvertisementViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AdsSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        profile = Profile.objects.filter(user=user).first()
+        if profile:
+            return Advertisement.objects.filter(raiser=profile)
+        else:
+            return Advertisement.objects.none()
