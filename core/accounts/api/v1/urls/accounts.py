@@ -51,4 +51,8 @@ urlpatterns = [
     ),
     path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
     path("jwt/verify/", TokenVerifyView.as_view(), name="jwt-verify"),
+
+    # is_verfied
+    path('user-verified/', views.IsUserVerifiedAPIView.as_view(), name='user-verified'),
+
 ]
