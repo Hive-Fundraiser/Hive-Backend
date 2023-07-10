@@ -62,13 +62,26 @@ class DonationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Donation.objects.all()
     serializer_class = DonationSerializer
+    
+    @action(detail=False, methods=['get'])
+    def get_last_donation_amount(self, request):
+        profile = request.user.profile_set.first() # Assuming there's a one-to-one relationship between User and Profile models
+        
+        last_donation = Donation.objects.filter(donor=profile).order_by('-donated_at').first()
+        if last_donation:
+            return Response(last_donation.amount)
+        return Response(0)  # If no donations found
+
+
     def create(self, request, *args, **kwargs):
         # Check if the user has completed their profile before creating the advertisement
         profile = request.user.profile_set.first()  # Assuming 'profile' is the related name of the foreign key field
         if not profile or not profile.is_complete():
             return Response({"error": "Please complete your profile before donating"}, status=400)
-        
+        last_donation_amount = self.get_last_donation_amount(request.user)              
         return super().create(request, *args, **kwargs)
+
+
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
