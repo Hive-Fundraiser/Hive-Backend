@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -127,7 +128,14 @@ class ProfileApiView(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
+    
+    @action(detail=False, methods=['get'])
+    def complete(self, request):
+        profile = self.get_object()
+        is_complete = profile.is_complete()
 
+        data = {'profile_complete': is_complete}
+        return Response(data)
 
 class EmailSend(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
