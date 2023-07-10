@@ -53,7 +53,11 @@ class AdsModelViewSet(viewsets.ModelViewSet):
         donators = Donation.objects.all()
         serializer = DonationSerializer(donators, many=True)
         return Response(serializer.data)
-
+    
+    @action(detail=False, methods=['get'])
+    def advertisement_count(self, request):
+        count = Advertisement.objects.count()
+        return Response({'count': count})
 class DonationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Donation.objects.all()
