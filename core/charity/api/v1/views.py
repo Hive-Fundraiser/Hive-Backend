@@ -78,7 +78,7 @@ class DonationViewSet(viewsets.ModelViewSet):
         profile = request.user.profile_set.first()  # Assuming 'profile' is the related name of the foreign key field
         if not profile or not profile.is_complete():
             return Response({"error": "Please complete your profile before donating"}, status=400)
-        last_donation_amount = self.get_last_donation_amount(request.user)              
+        last_donation_amount = self.get_last_donation_amount(request)  # Pass the entire request object here
         return super().create(request, *args, **kwargs)
 
 
