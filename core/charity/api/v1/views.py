@@ -10,6 +10,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
 from django.db.models import Count
 from rest_framework.response import Response
+from django.db.models import Sum
 from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
 from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
@@ -42,6 +43,11 @@ class AdsModelViewSet(viewsets.ModelViewSet):
         serializer = DonationSerializer(donators, many=True)
         return Response(serializer.data)
     
+    @action(detail=False, methods=['get'])
+    def total_collected_amount(self, request):
+        total_collected_amount = self.queryset.aggregate(Sum('collected_amount'))['collected_amount__sum'] or 0
+        return Response({"total_collected_amount": total_collected_amount}, status=200)
+
     @action(detail=False, methods=['get'])
     def all_donators(self, request):
         donators = Donation.objects.all()
