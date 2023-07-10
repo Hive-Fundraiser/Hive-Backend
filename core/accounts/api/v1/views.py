@@ -172,10 +172,10 @@ class ActivationApiView(APIView):
         user_obj = User.objects.get(pk=user_id)
 
         if user_obj.is_verified:
-            return redirect("127.0.0.1:3000")
+            return redirect("127.0.0.1:3000/activation")
         user_obj.is_verified = True
         user_obj.save()
-        return redirect("127.0.0.1:3000")
+        return redirect("127.0.0.1:3000/activation")
 
 
 class ActivationResendApiView(generics.GenericAPIView):
