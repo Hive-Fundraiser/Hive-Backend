@@ -81,7 +81,7 @@ class Donation(models.Model):
     def clean(self):
         super().clean()
 
-        if self.collected_amount >= self.estimated_amount:
+        if Advertisement.collected_amount == Advertisement.estimated_amount:
             self.status = False 
             
         if self.amount < 0:
