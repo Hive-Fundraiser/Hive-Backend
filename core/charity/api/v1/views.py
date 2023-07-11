@@ -51,8 +51,8 @@ class AdsModelViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def all_donators(self, request):
         donators = Donation.objects.all()
-        count = donators.count()
-        return Response({"count": count}, status=200)
+        serializer = DonationSerializer(donators, many=True)
+        return Response(serializer.data)
     
     @action(detail=False, methods=['get'])
     def advertisement_count(self, request):
