@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.views import TokenObtainPairView
 from mail_templated import EmailMessage
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -121,7 +121,7 @@ class ChangePasswordApiView(generics.GenericAPIView):
 class ProfileApiView(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsAuthenticatedOrReadOnly]
     parser_classes = [MultiPartParser]
 
     def get_object(self):
