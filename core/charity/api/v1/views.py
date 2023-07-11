@@ -11,9 +11,10 @@ from rest_framework.decorators import action
 from django.db.models import Count
 from rest_framework.response import Response
 from django.db.models import Sum
+from accounts.api.v1.serializers import ProfileSerializer
 from .permissions import IsOwnerOrReadOnly
 from .paginations import DefaultPagination
-from .serializers import AdsSerializer, CategorySerializer, DonationSerializer
+from .serializers import AdsSerializer, CategorySerializer, DonationSerializer,DonatorSerializer
 from charity.models import Advertisement, Category, Donation
 from accounts.models import Profile
 
@@ -50,8 +51,8 @@ class AdsModelViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def all_donators(self, request):
-        donators = Donation.objects.all()
-        serializer = DonationSerializer(donators, many=True)
+        donors = Donation.objects.values('donor').annotate(donation_count=Count('donor')).distinct()
+        serializer = DonatorSerializer(donors, many=True)  # Assuming you have a serializer for donor objects
         return Response(serializer.data)
     
     @action(detail=False, methods=['get'])

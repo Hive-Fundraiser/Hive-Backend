@@ -78,3 +78,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+class DonatorSerializer(serializers.Serializer):
+    donor = serializers.CharField()
+    donation_count = serializers.IntegerField()
