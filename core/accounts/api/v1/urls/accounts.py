@@ -51,4 +51,10 @@ urlpatterns = [
     ),
     path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
     path("jwt/verify/", TokenVerifyView.as_view(), name="jwt-verify"),
+    path('request-reset-email/', views.RequestPasswordResetEmail.as_view(),
+         name="request-reset-email"),
+    path('password-reset/<uidb64>/<token>/',
+         views.PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),
+    path('password-reset-complete', views.SetNewPasswordAPIView.as_view(),
+         name='password-reset-complete')
 ]
