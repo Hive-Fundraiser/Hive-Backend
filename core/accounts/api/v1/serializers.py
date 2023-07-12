@@ -6,14 +6,13 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from rest_framework import serializers
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(max_length=255, write_only=True)
@@ -129,10 +128,11 @@ class ActivationResendSerializer(serializers.Serializer):
 class ResetPasswordEmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(min_length=2)
 
-    redirect_url = serializers.CharField(max_length=500, required=False)
+    # redirect_url = serializers.CharField(max_length=500, required=False)
 
     class Meta:
         fields = ['email']
+
 
 
 class SetNewPasswordSerializer(serializers.Serializer):
